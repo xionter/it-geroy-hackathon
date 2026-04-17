@@ -6,6 +6,7 @@ import { ManagerProvider } from "./context/ManagerContext";
 
 // Pages
 import Login from "./pages/Login";
+import RequireManagerAuth from "./components/auth/RequireManagerAuth";
 import RequireWorkerAuth from "./components/auth/RequireWorkerAuth";
 
 // Engineer
@@ -50,12 +51,14 @@ export default function App() {
               </Route>
 
               {/* Manager routes */}
-              <Route element={<ManagerLayout />}>
-                <Route path="/manager" element={<ManagerDashboard />} />
-                <Route path="/manager/orders" element={<OrdersPage />} />
-                <Route path="/manager/engineers" element={<EngineersPage />} />
-                <Route path="/manager/warehouse" element={<WarehousePage />} />
-                <Route path="/manager/analytics" element={<AnalyticsPage />} />
+              <Route element={<RequireManagerAuth />}>
+                <Route element={<ManagerLayout />}>
+                  <Route path="/manager" element={<ManagerDashboard />} />
+                  <Route path="/manager/orders" element={<OrdersPage />} />
+                  <Route path="/manager/engineers" element={<EngineersPage />} />
+                  <Route path="/manager/warehouse" element={<WarehousePage />} />
+                  <Route path="/manager/analytics" element={<AnalyticsPage />} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

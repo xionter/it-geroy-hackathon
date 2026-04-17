@@ -6,6 +6,7 @@ export interface ManagerContextType {
   engineers: Engineer[];
   orders: ManagerOrder[];
   assignOrder: (orderId: string, engineerId: string | null) => void;
+  assignOrders: (orderIds: string[], engineerId: string) => void;
   setPriority: (orderId: string, priority: Priority) => void;
   setOrderStatus: (orderId: string, status: OrderStatus) => void;
   getEngineer: (id: string) => Engineer | undefined;

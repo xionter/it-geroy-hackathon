@@ -15,6 +15,13 @@ export function ManagerProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const assignOrders = useCallback((orderIds: string[], engineerId: string) => {
+    const selectedIds = new Set(orderIds);
+    setOrders((prev) =>
+      prev.map((o) => (selectedIds.has(o.id) ? { ...o, assignedEngineerId: engineerId } : o))
+    );
+  }, []);
+
   const setPriority = useCallback((orderId: string, priority: Priority) => {
     setOrders((prev) =>
       prev.map((o) => (o.id === orderId ? { ...o, priority } : o))
@@ -33,7 +40,7 @@ export function ManagerProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <ManagerContext.Provider value={{ engineers, orders, assignOrder, setPriority, setOrderStatus, getEngineer }}>
+    <ManagerContext.Provider value={{ engineers, orders, assignOrder, assignOrders, setPriority, setOrderStatus, getEngineer }}>
       {children}
     </ManagerContext.Provider>
   );
