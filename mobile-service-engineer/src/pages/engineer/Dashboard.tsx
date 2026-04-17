@@ -1,28 +1,62 @@
+import { useState } from 'react';
+import Header from '../../components/ui/Header';
+import OrderCard from '../../components/orders/OrderCard';
+import { useOrders } from '../../context/OrderContext';
+import type { OrderStatus } from '../../types';
+
+const tabs: { key: OrderStatus | 'all'; label: string }[] = [
+  { key: 'all', label: 'Все' },
+  { key: 'assigned', label: 'К выполнению' },
+  { key: 'in_progress', label: 'В работе' },
+  { key: 'completed', label: 'Выполнено' },
+];
+
+const priorityWeight = { urgent: 0, medium: 1, planned: 2 } as const;
+
 export default function EngineerDashboard() {
+  const { orders } = useOrders();
+  const [activeTab, setActiveTab] = useState<OrderStatus | 'all'>('all');
+
+  const filtered = orders
+    .filter((o) => activeTab === 'all' || o.status === activeTab)
+    .sort((a, b) => priorityWeight[a.priority] - priorityWeight[b.priority]);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-4">
-      <h1 className="text-3xl font-bold">Мои заявки</h1>
-      <p className="text-zinc-400 mt-1">Сегодняшние выезды</p>
+    <>
+      <Header title="Мои заявки" />
+      <div className="px-4">
+        <p className="text-zinc-400 text-sm mb-4">
+          Сегодня: {orders.filter((o) => o.status !== 'completed').length} активных
+        </p>
 
-      <div className="mt-6 space-y-4">
-        <div className="bg-zinc-900 p-4 rounded-2xl">
-          <p className="text-red-400 font-semibold">СРОЧНО</p>
-          <h2 className="text-xl mt-2">Человек застрял в лифте</h2>
-          <p className="text-zinc-400">ул. Ленина, 12</p>
+        {/* Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap min-h-[44px] transition-colors ${
+                activeTab === tab.key
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-zinc-800 text-zinc-400'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        <div className="bg-zinc-900 p-4 rounded-2xl">
-          <p className="text-yellow-400 font-semibold">СРЕДНИЙ</p>
-          <h2 className="text-xl mt-2">Неисправность банкомата</h2>
-          <p className="text-zinc-400">ТЦ Центральный</p>
-        </div>
-
-        <div className="bg-zinc-900 p-4 rounded-2xl">
-          <p className="text-green-400 font-semibold">ПЛАНОВО</p>
-          <h2 className="text-xl mt-2">Обслуживание кондиционера</h2>
-          <p className="text-zinc-400">Бизнес-центр Альфа</p>
+        {/* Orders */}
+        <div className="mt-4 space-y-3 pb-4">
+          {filtered.length === 0 ? (
+            <p className="text-center text-zinc-500 py-8">Нет заявок</p>
+          ) : (
+            filtered.map((order) => (
+              <OrderCard key={order.id} order={order} />
+            ))
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
