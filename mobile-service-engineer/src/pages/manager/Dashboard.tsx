@@ -1,4 +1,4 @@
-import { useManager } from '../../context/ManagerContext';
+import { useManager } from '../../hooks/useManager';
 import { AlertTriangle, CheckCircle, Users, Clock } from 'lucide-react';
 import PriorityBadge from '../../components/ui/PriorityBadge';
 import StatusBadge from '../../components/ui/StatusBadge';

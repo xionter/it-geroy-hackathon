@@ -1,21 +1,7 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { useState, useCallback, type ReactNode } from 'react';
 import type { Order, UsedPart } from '../types';
 import { mockOrders } from '../mocks/orders';
-
-interface OrderContextType {
-  orders: Order[];
-  getOrder: (id: string) => Order | undefined;
-  startWork: (id: string) => void;
-  completeOrder: (id: string) => void;
-  addPhotoBefore: (id: string, photo: string) => void;
-  addPhotoAfter: (id: string, photo: string) => void;
-  setSignature: (id: string, signature: string) => void;
-  addUsedPart: (id: string, part: UsedPart) => void;
-  removeUsedPart: (id: string, partId: string) => void;
-  toggleWork: (id: string, work: string) => void;
-}
-
-const OrderContext = createContext<OrderContextType | null>(null);
+import { OrderContext } from './orderContextValue';
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<Order[]>(mockOrders);
@@ -120,10 +106,4 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       {children}
     </OrderContext.Provider>
   );
-}
-
-export function useOrders() {
-  const ctx = useContext(OrderContext);
-  if (!ctx) throw new Error('useOrders must be used within OrderProvider');
-  return ctx;
 }

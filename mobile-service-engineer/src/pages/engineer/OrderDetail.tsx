@@ -5,7 +5,7 @@ import Button from '../../components/ui/Button';
 import PriorityBadge from '../../components/ui/PriorityBadge';
 import StatusBadge from '../../components/ui/StatusBadge';
 import Card from '../../components/ui/Card';
-import { useOrders } from '../../context/OrderContext';
+import { useOrders } from '../../hooks/useOrders';
 
 export default function OrderDetail() {
   const { id } = useParams<{ id: string }>();

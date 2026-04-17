@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useManager } from '../../context/ManagerContext';
+import { useManager } from '../../hooks/useManager';
 import PriorityBadge from '../../components/ui/PriorityBadge';
 import StatusBadge from '../../components/ui/StatusBadge';
 import type { OrderStatus, Priority } from '../../types';

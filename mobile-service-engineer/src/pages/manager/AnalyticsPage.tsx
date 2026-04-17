@@ -1,4 +1,4 @@
-import { useManager } from '../../context/ManagerContext';
+import { useManager } from '../../hooks/useManager';
 import { TrendingUp, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function AnalyticsPage() {

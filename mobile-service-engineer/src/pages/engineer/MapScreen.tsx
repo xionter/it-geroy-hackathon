@@ -1,7 +1,7 @@
 import Header from '../../components/ui/Header';
 import Card from '../../components/ui/Card';
 import { Navigation, MapPin } from 'lucide-react';
-import { useOrders } from '../../context/OrderContext';
+import { useOrders } from '../../hooks/useOrders';
 
 export default function MapScreen() {
   const { orders } = useOrders();

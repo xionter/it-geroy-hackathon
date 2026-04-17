@@ -5,7 +5,7 @@ import Header from '../../components/ui/Header';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import Modal from '../../components/ui/Modal';
-import { useOrders } from '../../context/OrderContext';
+import { useOrders } from '../../hooks/useOrders';
 import { mockParts } from '../../mocks/parts';
 
 const typicalWorks = [

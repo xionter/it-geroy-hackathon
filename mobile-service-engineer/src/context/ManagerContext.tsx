@@ -1,19 +1,9 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { useState, useCallback, type ReactNode } from 'react';
 import type { Engineer, ManagerOrder } from '../types/manager';
 import { mockEngineers } from '../mocks/engineers';
 import { mockManagerOrders } from '../mocks/managerOrders';
 import type { OrderStatus, Priority } from '../types';
-
-interface ManagerContextType {
-  engineers: Engineer[];
-  orders: ManagerOrder[];
-  assignOrder: (orderId: string, engineerId: string | null) => void;
-  setPriority: (orderId: string, priority: Priority) => void;
-  setOrderStatus: (orderId: string, status: OrderStatus) => void;
-  getEngineer: (id: string) => Engineer | undefined;
-}
-
-const ManagerContext = createContext<ManagerContextType | null>(null);
+import { ManagerContext } from './managerContextValue';
 
 export function ManagerProvider({ children }: { children: ReactNode }) {
   const [engineers] = useState<Engineer[]>(mockEngineers);
@@ -47,10 +37,4 @@ export function ManagerProvider({ children }: { children: ReactNode }) {
       {children}
     </ManagerContext.Provider>
   );
-}
-
-export function useManager() {
-  const ctx = useContext(ManagerContext);
-  if (!ctx) throw new Error('useManager must be used within ManagerProvider');
-  return ctx;
 }

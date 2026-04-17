@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { AuthProvider } from "./context/AuthContext";
 import { OrderProvider } from "./context/OrderContext";
 import { ManagerProvider } from "./context/ManagerContext";
 
 // Pages
 import Login from "./pages/Login";
+import RequireWorkerAuth from "./components/auth/RequireWorkerAuth";
 
 // Engineer
 import EngineerLayout from "./layouts/EngineerLayout";
@@ -26,6 +28,7 @@ import AnalyticsPage from "./pages/manager/AnalyticsPage";
 
 export default function App() {
   return (
+    <AuthProvider>
       <OrderProvider>
         <ManagerProvider>
           <BrowserRouter>
@@ -34,14 +37,16 @@ export default function App() {
               <Route path="/" element={<Login />} />
 
               {/* Engineer routes */}
-              <Route element={<EngineerLayout />}>
-                <Route path="/engineer" element={<EngineerDashboard />} />
-                <Route path="/engineer/order/:id" element={<OrderDetail />} />
-                <Route path="/engineer/order/:id/work" element={<WorkScreen />} />
-                <Route path="/engineer/order/:id/sign" element={<SignScreen />} />
-                <Route path="/engineer/map" element={<MapScreen />} />
-                <Route path="/engineer/parts" element={<PartsScreen />} />
-                <Route path="/engineer/chat" element={<ChatScreen />} />
+              <Route element={<RequireWorkerAuth />}>
+                <Route element={<EngineerLayout />}>
+                  <Route path="/engineer" element={<EngineerDashboard />} />
+                  <Route path="/engineer/order/:id" element={<OrderDetail />} />
+                  <Route path="/engineer/order/:id/work" element={<WorkScreen />} />
+                  <Route path="/engineer/order/:id/sign" element={<SignScreen />} />
+                  <Route path="/engineer/map" element={<MapScreen />} />
+                  <Route path="/engineer/parts" element={<PartsScreen />} />
+                  <Route path="/engineer/chat" element={<ChatScreen />} />
+                </Route>
               </Route>
 
               {/* Manager routes */}
@@ -56,5 +61,6 @@ export default function App() {
           </BrowserRouter>
         </ManagerProvider>
       </OrderProvider>
+    </AuthProvider>
   );
 }

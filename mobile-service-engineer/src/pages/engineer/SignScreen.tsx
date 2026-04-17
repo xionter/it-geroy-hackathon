@@ -3,7 +3,7 @@ import { CheckCircle } from 'lucide-react';
 import Header from '../../components/ui/Header';
 import SignaturePad from '../../components/signature/SignaturePad';
 import Button from '../../components/ui/Button';
-import { useOrders } from '../../context/OrderContext';
+import { useOrders } from '../../hooks/useOrders';
 
 export default function SignScreen() {
   const { id } = useParams<{ id: string }>();

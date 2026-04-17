@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useManager } from '../../context/ManagerContext';
+import { useManager } from '../../hooks/useManager';
 import { mockWarehouse } from '../../mocks/warehouse';
 import { Package } from 'lucide-react';
 

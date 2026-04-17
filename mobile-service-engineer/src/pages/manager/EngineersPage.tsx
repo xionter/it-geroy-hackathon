@@ -1,4 +1,4 @@
-import { useManager } from '../../context/ManagerContext';
+import { useManager } from '../../hooks/useManager';
 import { Phone, MapPin, Briefcase, CheckCircle } from 'lucide-react';
 
 const statusConfig = {
